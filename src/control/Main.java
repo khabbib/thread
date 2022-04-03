@@ -1,5 +1,6 @@
 package control;
 
+import model.Thread1;
 import view.GUIAssignment1;
 
 public class Main {

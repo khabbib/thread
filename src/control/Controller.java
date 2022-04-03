@@ -11,42 +11,47 @@ import java.awt.event.ActionEvent;
 
 public class Controller {
     private GUIAssignment1 view;
-    public Controller(){
+    private Thread1 a;
+    private Thread2 b;
+    private Thread3 c;
+    public Controller() {
         view = new GUIAssignment1(this);
         view.Start();
     }
 
 
-    // start thread 1
 
-    public void threadA(){
 
-    }
-    Thread1 a;
-    Thread2 b;
-    Thread3 c;
 
+    // btn handler
     public void btnControl(Buttons btn) {
         switch (btn){
             case StartThreadA:
-                System.out.println("start A");
-                a = new Thread1("The message", view);
-                a.start();
+                System.out.println("started One");
+                a = new Thread1(view);
+                new Thread(a).start();
                 break;
             case StopThreadA:
-                System.out.println("Stop A");
                 a.ok = true;
                 break;
             case StartThreadB:
-                System.out.println("start A");
-                b = new Thread2(new ImageIcon("\"image/jetStream.png\""), view);
-                b.start();
+                System.out.println("start Two");
+                b = new Thread2(view);
+                new Thread(b).start();
                 break;
             case StopThreadB:
-                System.out.println("Stop A");
-                b.interrupt();
+                System.out.println("Stop Two");
+                b.stopThread();
                 break;
-
+            case StartThreadC:
+                System.out.println("start Three");
+                c.start();
+                c.startThread();
+                break;
+            case StopThreadC:
+                System.out.println("Stop three");
+                c.stopThread();
+                break;
         }
     }
     // start thread 2

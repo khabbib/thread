@@ -131,6 +131,22 @@ public class GUIAssignment1
         Border b3 = BorderFactory.createTitledBorder("Triangle Thread");
         pnlTriangle.setBorder(b3);
         pnlTriangle.setBounds(240, 118, 222, 269);
+        pnlTriangle.setLayout(null);
+
+
+        // Add buttons and drawing panel to this panel
+        btnTriangle = new JButton("Start Rotate");
+        btnTriangle.setBounds(10, 226, 121, 23);
+        btnTriangle.addActionListener(e -> controller.btnControl(Buttons.StartThreadB));
+        pnlTriangle.add(btnTriangle);
+
+        btnTStop = new JButton("Stop");
+        btnTStop.setBounds(135, 226, 75, 23);
+        pnlTriangle.add(btnTStop);
+        pnlRotate = new JPanel();
+        pnlRotate.setBounds(10,  19,  200,  200);
+        Border b31 = BorderFactory.createLineBorder(Color.RED);
+        pnlRotate.setBorder(b31);
 
         Component ns = new Component() {
             @Override
@@ -142,26 +158,9 @@ public class GUIAssignment1
             }
         };
 
-        pnlTriangle.add(ns);
-        pnlTriangle.setLayout(null);
-
-
-        // Add buttons and drawing panel to this panel
-        btnTriangle = new JButton("Start Rotate");
-        btnTriangle.setBounds(10, 226, 121, 23);
-        pnlTriangle.add(btnTriangle);
-
-        btnTStop = new JButton("Stop");
-        btnTStop.setBounds(135, 226, 75, 23);
-        pnlTriangle.add(btnTStop);
-        pnlRotate = new JPanel();
-        pnlRotate.setBounds(10,  19,  200,  200);
-        Border b31 = BorderFactory.createLineBorder(Color.black);
-        pnlRotate.setBorder(b31);
+        pnlRotate.add(ns);
+        //traingle.setIcon(img);
         pnlTriangle.add(pnlRotate);
-        traingle = new JLabel(new ImageIcon("images/jetStream.png"));
-        traingle.setBounds(0,0,100,100);
-        pnlTriangle.add(traingle);
         // Add this to main window
         //pnlTriangle.add(new MyCanvas());
         frame.add(pnlTriangle);
@@ -203,13 +202,14 @@ public class GUIAssignment1
     }
 
     Random random = new Random();
-    public void displayText(String txt) {
+    public void displayText() {
         int x = random.nextInt(100);
         int y = random.nextInt(200);
         this.txt.setLocation(x,y);
     }
 
     public void rotateShape(int rotateDegree) {
+
 
     }
 

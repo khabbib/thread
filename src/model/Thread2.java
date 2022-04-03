@@ -7,11 +7,10 @@ import java.awt.*;
 import java.util.Random;
 
 public class Thread2 extends Thread {
-    public boolean ok = false;
-    private ImageIcon image;
+    public boolean ok2 = false;
+    private String name;
     private GUIAssignment1 view;
-    public Thread2(ImageIcon image, GUIAssignment1 view){
-        this.image = image;
+    public Thread2(GUIAssignment1 view){
         this.view = view;
     }
 
@@ -19,12 +18,13 @@ public class Thread2 extends Thread {
     @Override
     public void run() {
         int counter = 0;
-        while (!ok){
+        while (!ok2){
             try {
+
                 view.rotateShape(counter);
                 System.out.println("hellooo");
-                Thread.sleep(200);
-                counter+= 10;
+                Thread.sleep(100);
+                counter++;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -33,7 +33,12 @@ public class Thread2 extends Thread {
     }
 
 
-
+    public void stopThread() {
+        ok2 = true;
+    }
+    public void startThread() {
+        ok2 = false;
+    }
 }
 
 
