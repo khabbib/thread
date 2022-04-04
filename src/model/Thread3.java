@@ -2,26 +2,44 @@ package model;
 
 import view.GUIAssignment1;
 
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+
 public class Thread3 extends Thread {
-    private boolean ok3 = true;
+    private boolean ok3 = false;
+    public boolean startOk = false;
+
     private GUIAssignment1 view;
-    public Thread3(GUIAssignment1 view){
+    private File file;
+    private AudioInputStream audioInputStream;
+    private Clip clip;
+    public Thread3(File file, GUIAssignment1 view){
         this.view = view;
+        this.file = file;
     }
-
-
 
     @Override
     public void run() {
-        while (!ok3){
-            try {
+        System.out.println(file.getAbsolutePath());
 
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
+        while (!ok3){
+
+            try {
+                audioInputStream = AudioSystem.getAudioInputStream(file);
+                clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                clip.stop();
+                //Thread.sleep(3000);
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 e.printStackTrace();
             }
+            if (!startOk){
+                clip.start();
+            }
         }
-
     }
 
 

@@ -4,14 +4,12 @@ package view;
 import control.Controller;
 import model.Buttons;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
-import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class GUIAssignment1
@@ -38,6 +36,12 @@ public class GUIAssignment1
     private JComboBox cmbSkill;	// Skill combo box, needs to be filled in
     JLabel txt;
     JLabel traingle;
+    private double rotateValue;
+    private Graphics2D g2;
+    private File filePath;
+    private AudioInputStream audioInputStream;
+    private Clip clip;
+
 
     /**
      * Constructor
@@ -89,10 +93,24 @@ public class GUIAssignment1
         lblAudio.setBounds(115, 44, 300, 13);
         pnlSound.add(lblAudio);
         btnOpen = new JButton("Open");
+        btnOpen.addActionListener(e -> {
+            try {
+                controller.btnControl(Buttons.choosefile);
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
+                ex.printStackTrace();
+            }
+        });
         btnOpen.setBounds(6, 71, 75, 23);
         pnlSound.add(btnOpen);
         btnPlay = new JButton("Play");
         btnPlay.setBounds(88, 71, 75, 23);
+        btnPlay.addActionListener(e ->{
+            try {
+                controller.btnControl(Buttons.StartThreadC);
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
+                ex.printStackTrace();
+            }
+        });
         pnlSound.add(btnPlay);
         btnStop = new JButton("Stop");
         btnStop.setBounds(169, 71, 75, 23);
@@ -108,13 +126,25 @@ public class GUIAssignment1
 
         // Add buttons and drawing panel to this panel
         btnDisplay = new JButton("Start Display 1");
-        btnDisplay.addActionListener( l -> controller.btnControl(Buttons.StartThreadA));
+        btnDisplay.addActionListener( l -> {
+            try {
+                controller.btnControl(Buttons.StartThreadA);
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
+        });
         btnDisplay.setBounds(10, 226, 121, 23);
         pnlDisplay.add(btnDisplay);
 
         btnDStop = new JButton("Stop");
         btnDStop.setBounds(135, 226, 75, 23);
-        btnDStop.addActionListener(l -> controller.btnControl(Buttons.StopThreadA));
+        btnDStop.addActionListener(l -> {
+            try {
+                controller.btnControl(Buttons.StopThreadA);
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
+        });
         pnlDisplay.add(btnDStop);
         pnlMove = new JPanel();
         pnlMove.setBounds(10,  19,  200,  200);
@@ -137,13 +167,29 @@ public class GUIAssignment1
         // Add buttons and drawing panel to this panel
         btnTriangle = new JButton("Start Rotate");
         btnTriangle.setBounds(10, 226, 121, 23);
-        btnTriangle.addActionListener(e -> controller.btnControl(Buttons.StartThreadB));
+        btnTriangle.addActionListener(e -> {
+            try {
+                controller.btnControl(Buttons.StartThreadB);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (UnsupportedAudioFileException ex) {
+                ex.printStackTrace();
+            } catch (LineUnavailableException ex) {
+                ex.printStackTrace();
+            }
+        });
         pnlTriangle.add(btnTriangle);
 
         btnTStop = new JButton("Stop");
         btnTStop.setBounds(135, 226, 75, 23);
         pnlTriangle.add(btnTStop);
-        pnlRotate = new JPanel();
+        pnlRotate = new JPanel(){
+            @Override
+            public void paint(Graphics g){
+                g2 = (Graphics2D) g.create();
+                g2.setColor(Color.BLACK);
+            }
+        };
         pnlRotate.setBounds(10,  19,  200,  200);
         Border b31 = BorderFactory.createLineBorder(Color.RED);
         pnlRotate.setBorder(b31);
@@ -158,7 +204,6 @@ public class GUIAssignment1
             }
         };
 
-        pnlRotate.add(ns);
         //traingle.setIcon(img);
         pnlTriangle.add(pnlRotate);
         // Add this to main window
@@ -209,11 +254,19 @@ public class GUIAssignment1
     }
 
     public void rotateShape(int rotateDegree) {
-
-
+        g2.create();
+        g2.fill(new Polygon(new int[]{50,20,80}, new int[]{50,80,80}, 3));
+        g2.rotate(rotateDegree, 100,100);
     }
 
 
+    public void setAudioFile(File file){
+        this.filePath = file;
+        this.lblAudio.setText(file.getAbsolutePath());
+    }
+    public void playAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+
+    }
 }
 
 

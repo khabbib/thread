@@ -20,7 +20,6 @@ public class Thread2 extends Thread {
         int counter = 0;
         while (!ok2){
             try {
-
                 view.rotateShape(counter);
                 System.out.println("hellooo");
                 Thread.sleep(100);

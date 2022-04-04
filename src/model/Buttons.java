@@ -6,5 +6,6 @@ public enum Buttons {
     StartThreadB,
     StopThreadB,
     StartThreadC,
-    StopThreadC
+    StopThreadC,
+    choosefile
 }
