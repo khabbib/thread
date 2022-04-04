@@ -5,7 +5,7 @@ public enum Buttons {
     StopThreadA,
     StartThreadB,
     StopThreadB,
-    StartThreadC,
-    StopThreadC,
-    choosefile
+    startPlay,
+    stopPlay,
+    pickMusic
 }

@@ -22,31 +22,33 @@ public class Thread3 extends Thread {
 
     @Override
     public void run() {
-        System.out.println(file.getAbsolutePath());
-
+        System.out.println("Thread: " + Thread.currentThread().getName() + " file: " + file.getName() + " started");
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.stop();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
         while (!ok3){
-
             try {
-                audioInputStream = AudioSystem.getAudioInputStream(file);
-                clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-                clip.stop();
-                //Thread.sleep(3000);
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (!startOk){
+            if (startOk){
                 clip.start();
+            }else {
+                clip.stop();
             }
+
         }
     }
 
 
     public void stopThread() {
         ok3 = true;
-    }
-    public void startThread() {
-        ok3 = false;
     }
 }

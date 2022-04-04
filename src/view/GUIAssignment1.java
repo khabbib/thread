@@ -95,7 +95,7 @@ public class GUIAssignment1
         btnOpen = new JButton("Open");
         btnOpen.addActionListener(e -> {
             try {
-                controller.btnControl(Buttons.choosefile);
+                controller.btnControl(Buttons.pickMusic);
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
             }
@@ -106,7 +106,7 @@ public class GUIAssignment1
         btnPlay.setBounds(88, 71, 75, 23);
         btnPlay.addActionListener(e ->{
             try {
-                controller.btnControl(Buttons.StartThreadC);
+                controller.btnControl(Buttons.startPlay);
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                 ex.printStackTrace();
             }
@@ -114,6 +114,13 @@ public class GUIAssignment1
         pnlSound.add(btnPlay);
         btnStop = new JButton("Stop");
         btnStop.setBounds(169, 71, 75, 23);
+        btnStop.addActionListener(e -> {
+            try {
+                controller.btnControl(Buttons.stopPlay);
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
+                ex.printStackTrace();
+            }
+        });
         pnlSound.add(btnStop);
         frame.add(pnlSound);
 
