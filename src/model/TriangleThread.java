@@ -2,15 +2,11 @@ package model;
 
 import view.GUIAssignment1;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Random;
-
-public class Thread2 extends Thread {
+public class TriangleThread extends Thread {
     public boolean ok2 = false;
     private String name;
     private GUIAssignment1 view;
-    public Thread2(GUIAssignment1 view){
+    public TriangleThread(GUIAssignment1 view){
         this.view = view;
     }
 
@@ -34,9 +30,6 @@ public class Thread2 extends Thread {
 
     public void stopThread() {
         ok2 = true;
-    }
-    public void startThread() {
-        ok2 = false;
     }
 }
 

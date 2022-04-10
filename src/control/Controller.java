@@ -1,9 +1,9 @@
 package control;
 
 import model.Buttons;
-import model.Thread1;
-import model.Thread2;
-import model.Thread3;
+import model.TextThread;
+import model.TriangleThread;
+import model.MusicThread;
 import view.GUIAssignment1;
 
 import javax.sound.sampled.*;
@@ -11,11 +11,16 @@ import javax.swing.*;
 import java.io.*;
 
 public class Controller {
+
     private GUIAssignment1 view;
+    private TriangleThread triangleThread;
+    private MusicThread musicThread;
+    private TextThread textThread;
     private File fileSrc;
-    private Thread1 a;
-    private Thread2 b;
-    private Thread3 c;
+
+    /**
+     * The constructor run the view/GUI
+     */
     public Controller() {
         view = new GUIAssignment1(this);
         view.Start();
@@ -23,24 +28,22 @@ public class Controller {
 
 
 
-
-
-    // btn handler
+    // Method is for event controlling- buttons
     public void btnControl(Buttons btn) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         switch (btn) {
             // display text
             case StartThreadA -> {
-                a = new Thread1(view);
-                new Thread(a).start();
+                textThread = new TextThread(view);
+                textThread.start();
             }
-            case StopThreadA -> a.ok = true;
+            case StopThreadA -> textThread.stopThread();
 
             // triangle
             case StartThreadB -> {
-                b = new Thread2(view);
-                new Thread(b).start();
+                triangleThread = new TriangleThread(view);
+                new Thread(triangleThread).start();
             }
-            case StopThreadB -> b.stopThread();
+            case StopThreadB -> triangleThread.stopThread();
 
             // music player
             case pickMusic -> {
@@ -48,11 +51,11 @@ public class Controller {
                 file.showOpenDialog(null);
                 fileSrc = file.getSelectedFile();
                 view.setAudioFile(fileSrc);
-                c = new Thread3(fileSrc, view);
-                c.start();
+                musicThread = new MusicThread(fileSrc, view);
+                musicThread.start();
             }
-            case startPlay -> c.startOk = true;
-            case stopPlay -> c.startOk = false;
+            case startPlay -> musicThread.startThread();
+            case stopPlay -> musicThread.stopThread();
         }
     }
 }
